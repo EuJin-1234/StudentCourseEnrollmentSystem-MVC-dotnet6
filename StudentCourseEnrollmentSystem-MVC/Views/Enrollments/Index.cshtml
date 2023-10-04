@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Student_Course_Enrollment_System.Models.Enrollment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IsEnrolled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course.courseName)
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsEnrolled)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.FirstName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.LastName)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.courseName)
+            </td>
+
+
+                <td>
+                    @if (item.IsEnrolled)
+                    {
+                        <span class="text-success">Enrolled</span>
+                    }
+                    else if (item.IsRejected)
+                    {
+                        <span class="text-danger">Rejected</span>
+                    }
+                    else if (item.IsWithdrawn)
+                    {
+                        <span class="text-danger">Withdrawn</span>
+                    }
+                    else
+                    {
+                        <span class="text-warning">Pending</span>
+                    }
+                </td>
+
+                <td>
+                    @if ((User.IsInRole("Admin") || User.IsInRole("SuperAdmin")) && item.IsEnrolled == false && item.IsRejected == false && item.IsWithdrawn == false)
+                    {
+                        <form asp-action="Approve" asp-route-id="@item.EnrollmentID" method="post">
+                            <button type="submit" class="btn btn-success">Approve</button>
+                        </form>
+                        <form asp-action="Reject" asp-route-id="@item.EnrollmentID" method="post">
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+                    }
+                    else if (User.IsInRole("Student") && item.IsEnrolled)
+                    {
+                        <form asp-action="Withdraw" asp-route-id="@item.EnrollmentID" method="post">
+                            <button type="submit" class="btn btn-danger">Withdraw</button>
+                        </form>
+                    }
+                </td>
+
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.EnrollmentID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.EnrollmentID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.EnrollmentID">Delete</a>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
