@@ -1,5 +1,6 @@
 ﻿//Used in AuthController
-namespace Student_Course_Enrollment_System.Resources
+
+namespace StudentCourseEnrollmentSystem_MVC.DTOs.Resources
 {
     public class ChangePasswordResource
     {

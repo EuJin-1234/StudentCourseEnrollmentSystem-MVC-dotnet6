@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Student_Course_Enrollment_System.Models;
-using Student_Course_Enrollment_System.Resources;
 using System.Data;
 using AutoMapper;
 using Student_Course_Enrollment_System.Models.Auth;
@@ -13,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using StudentCourseEnrollmentSystem_MVC.DTOs.Resources;
 
 
 // Signup, login, logout, change password API 
